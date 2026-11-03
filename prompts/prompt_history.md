@@ -124,7 +124,11 @@ I used the suggestions as guidance rather than accepting everything without chec
 - Ran the pipeline multiple times to check duplicate prevention.
 - Inserted an invalid record and verified that it was stored with its rejection reason.
 - Checked the warehouse using SQL reconciliation queries.
-- Ran the automated test suite and confirmed that all 22 tests passed.
+- Ran the automated test suite and confirmed that all 29 tests passed.
+- Tested empty and malformed input files.
+- Simulated a warehouse loading failure and verified transaction rollback.
+- Reran the pipeline successfully and confirmed that no duplicate sales records were inserted.
+- Verified the final fact_sales count remained 100,000.
 - Compared pipeline execution time before and after increasing the batch size.
 
 ## My Responsibility

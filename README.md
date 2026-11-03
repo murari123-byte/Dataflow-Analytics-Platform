@@ -40,35 +40,35 @@ The warehouse follows a star schema, making it easier to perform analytical quer
 | Analytics | SQL |
 | Version Control | Git, GitHub |
 
+
 ## 4. Project Structure
 
 ```text
 dataflow-analytics-platform/
 │
 ├── data/
-│   ├── raw/
-│   │   ├── customers.json
-│   │   └── orders.csv
-│   ├── processed/
-│   └── rejected/
+│   └── raw/
+│       ├── customers.json
+│       └── orders.csv
 │
 ├── src/
 │   ├── ingestion/
 │   │   ├── customer_loader.py
-│   │   └── order_loader.py
+│   │   ├── order_loader.py
+│   │   └── __init__.py
 │   │
 │   ├── validation/
 │   │   ├── customer_validator.py
-│   │   └── order_validator.py
-│   │
-│   ├── transformation/
+│   │   ├── order_validator.py
+│   │   └── __init__.py
 │   │
 │   ├── loading/
 │   │   ├── database.py
-│   │   └── load_warehouse.py
+│   │   ├── load_warehouse.py
+│   │   └── __init__.py
 │   │
-│   ├── analytics/
-│   └── monitoring/
+│   ├── test_connection.py
+│   └── __init__.py
 │
 ├── scripts/
 │   └── generate_data.py
@@ -96,6 +96,7 @@ dataflow-analytics-platform/
 ├── requirements.txt
 └── README.md
 ```
+
 
 ## 5. Database Design
 
@@ -262,7 +263,9 @@ The pipeline performs the following operations:
 python -m pytest -v
 ```
 
-The current validation test suite contains 22 test cases.
+The automated test suite currently contains 29 tests:
+- 22 customer and order validation tests.
+- 7 ingestion tests covering empty files, malformed JSON, incorrect JSON structure and missing files.
 
 ### Step 4: Run Data Reconciliation Checks
 
@@ -395,7 +398,14 @@ The automated validation test suite currently includes 22 tests covering:
 - Missing columns.
 - Multiple validation errors.
 
-**Latest verified result: 22 tests passed.**
+**Latest verified result: 29 tests passed.**
+
+Additional reliability checks performed:
+- Re-ran the pipeline to verify that duplicate sales records were not inserted.
+- Simulated a warehouse loading failure and verified that the transaction was rolled back.
+- Confirmed that the failed run was recorded with its error message.
+- Re-ran the pipeline successfully after the failure.
+- Verified that the fact_sales table remained at 100,000 records after recovery.
 
 ## 13. Assumptions and Limitations
 
@@ -404,7 +414,7 @@ The automated validation test suite currently includes 22 tests covering:
 - Product validation uses predefined product IDs.
 - Customer dimension records maintain the latest customer attributes; historical SCD Type 2 tracking is not implemented.
 - Analytics are provided through SQL queries rather than a dashboard.
-- The current automated tests focus on data validation; full database integration and failure-recovery testing can be extended.
+- Automated tests cover validation and ingestion. Warehouse failure rollback and recovery have also been verified manually; automated database integration tests can be added in future improvements.
 - Pipeline monitoring records execution status, but a failure between warehouse commit and final status update can result in a status that does not fully reflect the committed data.
 
 ## 14. Project Documentation
