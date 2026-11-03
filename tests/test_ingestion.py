@@ -86,3 +86,40 @@ def test_missing_order_file(monkeypatch, tmp_path):
 
     with pytest.raises(FileNotFoundError):
         order_loader.load_orders()
+
+def test_unexpected_customer_column(monkeypatch, tmp_path):
+    file_path = tmp_path / "customers.json"
+
+    file_path.write_text(
+        json.dumps([
+            {
+                "customer_id": "C001",
+                "customer_name": "Test Customer",
+                "loyalty_level": "Gold"
+            }
+        ]),
+        encoding="utf-8"
+    )
+
+    monkeypatch.setattr(customer_loader, "CUSTOMER_FILE", file_path)
+
+    with pytest.raises(ValueError, match="Unexpected customer columns"):
+        customer_loader.load_customers()
+
+
+def test_unexpected_order_column(monkeypatch, tmp_path):
+    file_path = tmp_path / "orders.csv"
+
+    file_path.write_text(
+        "order_id,order_line_id,customer_id,product_id,"
+        "product_name,category,order_date,quantity,"
+        "unit_price,order_status,new_field\n"
+        "O001,L001,C001,P001,Test Product,Electronics,"
+        "2026-01-01,1,100,COMPLETED,unexpected\n",
+        encoding="utf-8"
+    )
+
+    monkeypatch.setattr(order_loader, "ORDER_FILE", file_path)
+
+    with pytest.raises(ValueError, match="Unexpected order columns"):
+        order_loader.load_orders()

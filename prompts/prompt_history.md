@@ -1,5 +1,17 @@
 # AI Prompt History
 
+## AI Tools Used
+
+I used **ChatGPT by OpenAI** as my only AI assistance tool during this project.
+
+I used it to understand the assignment, plan the architecture, get implementation guidance, debug errors, develop test cases, improve performance and prepare project documentation.
+
+I used Git and GitHub for version control and repository hosting, not as AI coding tools.
+
+I reviewed the suggested solutions, made changes where necessary, executed the project locally and verified the results using automated tests and PostgreSQL queries.
+
+The prompt history below is an organized record of the main prompts used during development. The wording has been condensed for readability and should not be treated as a verbatim transcript.
+
 ## Project: DataFlow Analytics Platform
 
 The following are the main prompts used during the development of this project. They are written in a natural, conversational style to reflect the way I asked for help.

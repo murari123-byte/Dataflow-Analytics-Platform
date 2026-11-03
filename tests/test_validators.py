@@ -325,3 +325,22 @@ def test_multiple_validation_errors(valid_order_df, valid_customer_ids):
     assert "Invalid quantity" in reason
     assert "Invalid unit_price" in reason
     assert "Invalid order_status" in reason
+
+
+def test_late_arriving_order_with_older_date_is_valid(
+    valid_order_df,
+    valid_customer_ids,
+):
+    orders = valid_order_df.copy()
+
+    # Simulate an older order arriving after newer orders.
+    orders.loc[0, "order_date"] = "2024-01-15"
+
+    valid, rejected = validate_orders(
+        orders,
+        valid_customer_ids,
+    )
+
+    assert len(valid) == 1
+    assert len(rejected) == 0
+    assert valid.iloc[0]["order_date"] == pd.Timestamp("2024-01-15")

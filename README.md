@@ -264,7 +264,7 @@ The pipeline performs the following operations:
 python -m pytest -v
 ```
 
-The automated test suite currently contains 29 tests:
+The automated test suite currently contains 32 tests:
 - 22 customer and order validation tests.
 - 7 ingestion tests covering empty files, malformed JSON, incorrect JSON structure and missing files.
 
@@ -383,7 +383,7 @@ For details, see [Performance Report](docs/performance.md).
 
 ## 12. Testing Results
 
-The automated test suite contains 29 tests in total:
+The automated test suite contains 32 tests in total:
 
 - Valid customer and order records.
 - Missing required fields.
@@ -400,8 +400,10 @@ The automated test suite contains 29 tests in total:
 - Multiple validation errors.
 - Empty customer and order input files.
 - Malformed JSON, incorrect JSON structure and missing source files.
+- Unexpected columns in customer and order source files.
+- Late-arriving orders with older dates.
 
-**Latest verified result: 29 tests passed.**
+**Latest verified result: 32 tests passed.**
 
 Additional reliability checks performed:
 - Re-ran the pipeline to verify that duplicate sales records were not inserted.
@@ -409,7 +411,6 @@ Additional reliability checks performed:
 - Confirmed that the failed run was recorded with its error message.
 - Re-ran the pipeline successfully after the failure.
 - Verified that the fact_sales table remained at 100,000 records after recovery.
-
 
 ## 13. Assumptions and Limitations
 

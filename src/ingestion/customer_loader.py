@@ -1,4 +1,3 @@
-
 import json
 from pathlib import Path
 
@@ -42,6 +41,13 @@ def load_customers():
         dataframe = pd.DataFrame(columns=EXPECTED_COLUMNS)
     else:
         dataframe = pd.DataFrame(records)
+
+    unexpected_columns = set(dataframe.columns) - set(EXPECTED_COLUMNS)
+
+    if unexpected_columns:
+        raise ValueError(
+            f"Unexpected customer columns found: {sorted(unexpected_columns)}"
+        )
 
     print("Customer ingestion completed.")
     print(f"Total customer records: {len(dataframe):,}")

@@ -40,8 +40,12 @@ def load_orders():
             f"Invalid order CSV file: {error}"
         ) from error
 
-    if dataframe.empty and len(dataframe.columns) == 0:
-        dataframe = pd.DataFrame(columns=EXPECTED_COLUMNS)
+    unexpected_columns = set(dataframe.columns) - set(EXPECTED_COLUMNS)
+
+    if unexpected_columns:
+        raise ValueError(
+            f"Unexpected order columns found: {sorted(unexpected_columns)}"
+        )
 
     print("Order ingestion completed.")
     print(f"Total order records: {len(dataframe):,}")
