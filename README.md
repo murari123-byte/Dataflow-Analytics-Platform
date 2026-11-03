@@ -412,6 +412,27 @@ Additional reliability checks performed:
 - Re-ran the pipeline successfully after the failure.
 - Verified that the fact_sales table remained at 100,000 records after recovery.
 - Repeated the pipeline execution (Run ID 11) and verified idempotency: 0 new sales rows inserted, with the fact_sales table remaining at 100,000 records.
+### Final Warehouse Reconciliation
+
+The following checks were performed against the PostgreSQL warehouse:
+
+| Metric | Verified Result |
+|---|---:|
+| Customer records | 10,000 |
+| Product records | 10 |
+| Date records | 669 |
+| Sales records | 100,000 |
+| Unique order lines | 100,000 |
+| Historical rejected records | 1 |
+
+**Data Integrity Checks:**
+- Missing customer references: 0
+- Missing product references: 0
+- Missing date references: 0
+- Incorrect sales calculations: 0
+- Duplicate order lines: 0
+
+**Result:** All warehouse reconciliation and data integrity checks passed.
 
 ## 13. Assumptions and Limitations
 
