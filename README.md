@@ -411,6 +411,7 @@ Additional reliability checks performed:
 - Confirmed that the failed run was recorded with its error message.
 - Re-ran the pipeline successfully after the failure.
 - Verified that the fact_sales table remained at 100,000 records after recovery.
+- Repeated the pipeline execution (Run ID 11) and verified idempotency: 0 new sales rows inserted, with the fact_sales table remaining at 100,000 records.
 
 ## 13. Assumptions and Limitations
 
