@@ -80,7 +80,8 @@ dataflow-analytics-platform/
 │
 ├── tests/
 │   ├── conftest.py
-│   └── test_validators.py
+│   ├── test_validators.py
+│   └── test_ingestion.py
 │
 ├── docs/
 │   ├── architecture.md
@@ -137,7 +138,7 @@ Install the following:
 ### Step 1: Clone the Repository
 
 ```powershell
-git clone YOUR_PUBLIC_GITHUB_REPOSITORY_URL
+git clone https://github.com/murari123-byte/Dataflow-Analytics-Platform.git
 ```
 
 Navigate to the project folder:
@@ -295,7 +296,7 @@ The analytics queries cover:
 4. Sales by customer segment.
 5. Order status distribution.
 6. Overall sales summary.
-7. Completed sales revenue, if the seventh query has been added to the SQL file.
+7. Completed sales revenue.
 
 ## 8. Verify Database Records
 
@@ -382,7 +383,7 @@ For details, see [Performance Report](docs/performance.md).
 
 ## 12. Testing Results
 
-The automated validation test suite currently includes 22 tests covering:
+The automated test suite contains 29 tests in total:
 
 - Valid customer and order records.
 - Missing required fields.
@@ -397,6 +398,8 @@ The automated validation test suite currently includes 22 tests covering:
 - Empty datasets.
 - Missing columns.
 - Multiple validation errors.
+- Empty customer and order input files.
+- Malformed JSON, incorrect JSON structure and missing source files.
 
 **Latest verified result: 29 tests passed.**
 
@@ -406,6 +409,7 @@ Additional reliability checks performed:
 - Confirmed that the failed run was recorded with its error message.
 - Re-ran the pipeline successfully after the failure.
 - Verified that the fact_sales table remained at 100,000 records after recovery.
+
 
 ## 13. Assumptions and Limitations
 
